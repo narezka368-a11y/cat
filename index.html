@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐱 Мир Котиков</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Плавающие лапки на фоне -->
+    <div class="paws-bg" id="pawsBg"></div>
+
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="logo">🐾 КотоМир</div>
+        <ul class="nav-links">
+            <li><a href="#home">Главная</a></li>
+            <li><a href="#facts">Факты</a></li>
+            <li><a href="#breeds">Породы</a></li>
+            <li><a href="#gallery">Галерея</a></li>
+        </ul>
+    </nav>
+
+    <!-- Герой-секция -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="word">Добро</span>
+                <span class="word">пожаловать</span>
+                <span class="word">в</span>
+                <span class="word highlight">Мир Котиков!</span>
+            </h1>
+            <p class="hero-subtitle">Здесь живут самые пушистые, загадочные и милые существа во Вселенной 🐈</p>
+            <button class="cta-button" onclick="scrollToSection('facts')">
+                Узнать больше <span class="paw">🐾</span>
+            </button>
+        </div>
+        <div class="hero-cat">
+            <div class="cat-emoji">😺</div>
+            <div class="floating-hearts">
+                <span>💖</span><span>💕</span><span>💗</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция фактов -->
+    <section class="facts" id="facts">
+        <h2 class="section-title">✨ Интересные факты о котиках</h2>
+        <div class="facts-grid">
+            <div class="fact-card">
+                <div class="fact-icon">😴</div>
+                <h3>Сон</h3>
+                <p>Котики спят 12-16 часов в сутки — это 70% их жизни!</p>
+            </div>
+            <div class="fact-card">
+                <div class="fact-icon">👃</div>
+                <h3>Нос</h3>
+                <p>Отпечаток носа кота уникален, как отпечаток пальца человека.</p>
+            </div>
+            <div class="fact-card">
+                <div class="fact-icon">🎵</div>
+                <h3>Мурчание</h3>
+                <p>Мурчание помогает котикам заживлять раны и успокаиваться.</p>
+            </div>
+            <div class="fact-card">
+                <div class="fact-icon">🏃</div>
+                <h3>Скорость</h3>
+                <p>Коты могут развивать скорость до 48 км/ч на коротких дистанциях.</p>
+            </div>
+            <div class="fact-card">
+                <div class="fact-icon">👀</div>
+                <h3>Зрение</h3>
+                <p>Коты видят в темноте в 6 раз лучше человека.</p>
+            </div>
+            <div class="fact-card">
+                <div class="fact-icon">🎂</div>
+                <h3>Возраст</h3>
+                <p>1 год жизни кота = примерно 15 человеческим годам.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция пород -->
+    <section class="breeds" id="breeds">
+        <h2 class="section-title">🐈 Популярные породы</h2>
+        <div class="breeds-grid">
+            <div class="breed-card">
+                <div class="breed-img">🐱</div>
+                <h3>Мейн-кун</h3>
+                <p>Самые крупные домашние кошки. Дружелюбные гиганты с кисточками на ушах.</p>
+                <div class="breed-tag">Вес: 6-12 кг</div>
+            </div>
+            <div class="breed-card">
+                <div class="breed-img">😸</div>
+                <h3>Британская</h3>
+                <p>Плюшевая шубка и невозмутимый характер. Настоящие аристократы.</p>
+                <div class="breed-tag">Вес: 4-8 кг</div>
+            </div>
+            <div class="breed-card">
+                <div class="breed-img">😻</div>
+                <h3>Сфинкс</h3>
+                <p>Без шерсти, но с огромным сердцем. Очень ласковые и умные.</p>
+                <div class="breed-tag">Вес: 3-6 кг</div>
+            </div>
+            <div class="breed-card">
+                <div class="breed-img">🙀</div>
+                <h3>Шотландская</h3>
+                <p>Знамениты своими вислоухими ушками. Спокойные и нежные.</p>
+                <div class="breed-tag">Вес: 3-6 кг</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция галереи -->
+    <section class="gallery" id="gallery">
+        <h2 class="section-title">📸 Галерея котиков</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item">😺</div>
+            <div class="gallery-item">😸</div>
+            <div class="gallery-item">😹</div>
+            <div class="gallery-item">😻</div>
+            <div class="gallery-item">😼</div>
+            <div class="gallery-item">😽</div>
+            <div class="gallery-item">🙀</div>
+            <div class="gallery-item">😿</div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer>
+        <p>Сделано с ❤️ для всех любителей котиков</p>
+        <p class="footer-paws">🐾 🐾 🐾</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
