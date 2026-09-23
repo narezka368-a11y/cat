@@ -1,0 +1,145 @@
+// Создание плавающих лапок
+function createFloatingPaws() {
+    const pawsBg = document.getElementById('pawsBg');
+    const paws = ['🐾', '🐾', '🐾', '🐾', '🐾'];
+    
+    for (let i = 0; i < 20; i++) {
+        const paw = document.createElement('div');
+        paw.className = 'paw-float';
+        paw.textContent = paws[Math.floor(Math.random() * paws.length)];
+        paw.style.left = Math.random() * 100 + '%';
+        paw.style.fontSize = (Math.random() * 30 + 20) + 'px';
+        paw.style.animationDuration = (Math.random() * 15 + 10) + 's';
+        paw.style.animationDelay = (Math.random() * 10) + 's';
+        pawsBg.appendChild(paw);
+    }
+}
+
+// Плавная прокрутка
+function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+}
+
+// Анимация при прокрутке (Intersection Observer)
+function setupScrollAnimations() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.classList.add('visible');
+                }, index * 100);
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    // Наблюдаем за всеми элементами, которые нужно анимировать
+    document.querySelectorAll('.fact-card, .breed-card, .gallery-item, .section-title')
+        .forEach(el => observer.observe(el));
+}
+
+// Создание частиц-сердечек при клике
+function createHeartBurst(x, y) {
+    const hearts = ['💖', '💕', '💗', '❤️', '💝'];
+    for (let i = 0; i < 8; i++) {
+        const heart = document.createElement('div');
+        heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+        heart.style.position = 'fixed';
+        heart.style.left = x + 'px';
+        heart.style.top = y + 'px';
+        heart.style.fontSize = '24px';
+        heart.style.pointerEvents = 'none';
+        heart.style.zIndex = '9999';
+        heart.style.transition = 'all 1s ease-out';
+        document.body.appendChild(heart);
+        
+        const angle = (Math.PI * 2 * i) / 8;
+        const distance = 100 + Math.random() * 100;
+        
+        setTimeout(() => {
+            heart.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) scale(0)`;
+            heart.style.opacity = '0';
+        }, 10);
+        
+        setTimeout(() => heart.remove(), 1100);
+    }
+}
+
+// Клик по карточкам
+function setupClickEffects() {
+    document.addEventListener('click', (e) => {
+        createHeartBurst(e.clientX, e.clientY);
+    });
+    
+    // Мурчание при наведении на карточку
+    document.querySelectorAll('.fact-card, .breed-card').forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            card.style.animation = 'none';
+            setTimeout(() => {
+                card.style.animation = 'wiggle 0.5s ease';
+            }, 10);
+        });
+    });
+}
+
+// Параллакс для главного кота
+function setupParallax() {
+    const heroCat = document.querySelector('.cat-emoji');
+    if (!heroCat) return;
+    
+    document.addEventListener('mousemove', (e) => {
+        const x = (e.clientX / window.innerWidth - 0.5) * 30;
+        const y = (e.clientY / window.innerHeight - 0.5) * 30;
+        heroCat.style.transform = `translate(${x}px, ${y}px)`;
+    });
+}
+
+// Смена цвета navbar при скролле
+function setupNavbarScroll() {
+    const navbar = document.querySelector('.navbar');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            navbar.style.background = 'rgba(15, 52, 96, 0.95)';
+            navbar.style.boxShadow = '0 5px 30px rgba(255, 107, 157, 0.3)';
+        } else {
+            navbar.style.background = 'rgba(26, 26, 46, 0.8)';
+            navbar.style.boxShadow = 'none';
+        }
+    });
+}
+
+// Случайное "мурчание" в консоли
+function catSound() {
+    const sounds = ['Мяу! 🐱', 'Муррр~ 💕', 'Мяу-мяу! 😺', 'Мррр... 😽'];
+    console.log(sounds[Math.floor(Math.random() * sounds.length)]);
+}
+
+// Инициализация
+document.addEventListener('DOMContentLoaded', () => {
+    createFloatingPaws();
+    setupScrollAnimations();
+    setupClickEffects();
+    setupParallax();
+    setupNavbarScroll();
+    
+    // Приветствие в консоли
+    console.log('%c🐱 Добро пожаловать в КотоМир! 🐱', 
+        'font-size: 20px; color: #ff6b9d; font-weight: bold;');
+    catSound();
+    
+    // Периодическое мурчание
+    setInterval(catSound, 10000);
+});
+
+// Плавная прокрутка для всех якорных ссылок
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+        }
+    });
+});
