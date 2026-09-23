@@ -1,145 +1,504 @@
-// Создание плавающих лапок
-function createFloatingPaws() {
-    const pawsBg = document.getElementById('pawsBg');
-    const paws = ['🐾', '🐾', '🐾', '🐾', '🐾'];
-    
-    for (let i = 0; i < 20; i++) {
-        const paw = document.createElement('div');
-        paw.className = 'paw-float';
-        paw.textContent = paws[Math.floor(Math.random() * paws.length)];
-        paw.style.left = Math.random() * 100 + '%';
-        paw.style.fontSize = (Math.random() * 30 + 20) + 'px';
-        paw.style.animationDuration = (Math.random() * 15 + 10) + 's';
-        paw.style.animationDelay = (Math.random() * 10) + 's';
-        pawsBg.appendChild(paw);
+\* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    color: #fff;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* Плавающие лапки на фоне */
+.paws-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.paw-float {
+    position: absolute;
+    font-size: 30px;
+    opacity: 0.15;
+    animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+    from {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% { opacity: 0.15; }
+    90% { opacity: 0.15; }
+    to {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
     }
 }
 
-// Плавная прокрутка
-function scrollToSection(id) {
-    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+/* Навигация */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 20px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(26, 26, 46, 0.8);
+    backdrop-filter: blur(15px);
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255, 107, 157, 0.2);
+    animation: slideDown 0.8s ease;
 }
 
-// Анимация при прокрутке (Intersection Observer)
-function setupScrollAnimations() {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
-            if (entry.isIntersecting) {
-                setTimeout(() => {
-                    entry.target.classList.add('visible');
-                }, index * 100);
-            }
-        });
-    }, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    });
-
-    // Наблюдаем за всеми элементами, которые нужно анимировать
-    document.querySelectorAll('.fact-card, .breed-card, .gallery-item, .section-title')
-        .forEach(el => observer.observe(el));
+@keyframes slideDown {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(0); }
 }
 
-// Создание частиц-сердечек при клике
-function createHeartBurst(x, y) {
-    const hearts = ['💖', '💕', '💗', '❤️', '💝'];
-    for (let i = 0; i < 8; i++) {
-        const heart = document.createElement('div');
-        heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
-        heart.style.position = 'fixed';
-        heart.style.left = x + 'px';
-        heart.style.top = y + 'px';
-        heart.style.fontSize = '24px';
-        heart.style.pointerEvents = 'none';
-        heart.style.zIndex = '9999';
-        heart.style.transition = 'all 1s ease-out';
-        document.body.appendChild(heart);
-        
-        const angle = (Math.PI * 2 * i) / 8;
-        const distance = 100 + Math.random() * 100;
-        
-        setTimeout(() => {
-            heart.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) scale(0)`;
-            heart.style.opacity = '0';
-        }, 10);
-        
-        setTimeout(() => heart.remove(), 1100);
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    background: linear-gradient(45deg, #ff6b9d, #ffa07a, #ffd93d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from { filter: drop-shadow(0 0 5px #ff6b9d); }
+    to { filter: drop-shadow(0 0 20px #ffd93d); }
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.1rem;
+    position: relative;
+    transition: color 0.3s;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #ff6b9d, #ffd93d);
+    transition: width 0.3s;
+}
+
+.nav-links a:hover {
+    color: #ff6b9d;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* Герой */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 100px 50px 50px;
+    position: relative;
+    z-index: 1;
+    flex-wrap: wrap;
+}
+
+.hero-content {
+    max-width: 600px;
+    animation: fadeInLeft 1s ease;
+}
+
+@keyframes fadeInLeft {
+    from { opacity: 0; transform: translateX(-50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    line-height: 1.2;
+    margin-bottom: 25px;
+}
+
+.hero-title .word {
+    display: inline-block;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease forwards;
+}
+
+.hero-title .word:nth-child(1) { animation-delay: 0.2s; }
+.hero-title .word:nth-child(2) { animation-delay: 0.4s; }
+.hero-title .word:nth-child(3) { animation-delay: 0.6s; }
+.hero-title .word:nth-child(4) { animation-delay: 0.8s; }
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.highlight {
+    background: linear-gradient(45deg, #ff6b9d, #ffa07a, #ffd93d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-subtitle {
+    font-size: 1.3rem;
+    color: #b8b8d1;
+    margin-bottom: 35px;
+    animation: fadeIn 1.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.cta-button {
+    padding: 18px 40px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 50px;
+    background: linear-gradient(45deg, #ff6b9d, #ffa07a);
+    color: white;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4);
+}
+
+.cta-button:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 15px 40px rgba(255, 107, 157, 0.6);
+}
+
+.cta-button .paw {
+    display: inline-block;
+    transition: transform 0.3s;
+}
+
+.cta-button:hover .paw {
+    transform: rotate(20deg) scale(1.3);
+}
+
+/* Герой-кот */
+.hero-cat {
+    position: relative;
+    animation: fadeInRight 1s ease;
+}
+
+@keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.cat-emoji {
+    font-size: 20rem;
+    animation: bounce 2s ease-in-out infinite;
+    filter: drop-shadow(0 0 50px rgba(255, 107, 157, 0.6));
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0) rotate(-5deg); }
+    50% { transform: translateY(-30px) rotate(5deg); }
+}
+
+.floating-hearts {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.floating-hearts span {
+    position: absolute;
+    font-size: 2rem;
+    animation: floatHeart 3s ease-in-out infinite;
+}
+
+.floating-hearts span:nth-child(1) {
+    left: 0;
+    animation-delay: 0s;
+}
+
+.floating-hearts span:nth-child(2) {
+    left: 60%;
+    animation-delay: 1s;
+}
+
+.floating-hearts span:nth-child(3) {
+    left: 30%;
+    animation-delay: 2s;
+}
+
+@keyframes floatHeart {
+    0% { transform: translateY(0) scale(1); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translateY(-200px) scale(1.5); opacity: 0; }
+}
+
+/* Секции */
+section {
+    padding: 100px 50px;
+    position: relative;
+    z-index: 1;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.8rem;
+    margin-bottom: 60px;
+    background: linear-gradient(45deg, #ff6b9d, #ffa07a, #ffd93d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease;
+}
+
+.section-title.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Факты */
+.facts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.fact-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    padding: 35px 25px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 107, 157, 0.2);
+    text-align: center;
+    transition: all 0.4s ease;
+    opacity: 0;
+    transform: translateY(50px);
+    cursor: pointer;
+}
+
+.fact-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.fact-card:hover {
+    transform: translateY(-10px) scale(1.03);
+    border-color: #ff6b9d;
+    box-shadow: 0 20px 50px rgba(255, 107, 157, 0.3);
+    background: rgba(255, 107, 157, 0.1);
+}
+
+.fact-icon {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    animation: wiggle 3s ease-in-out infinite;
+}
+
+@keyframes wiggle {
+    0%, 100% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+}
+
+.fact-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #ff6b9d;
+}
+
+.fact-card p {
+    color: #b8b8d1;
+    line-height: 1.6;
+}
+
+/* Породы */
+.breeds-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.breed-card {
+    background: linear-gradient(145deg, rgba(255, 107, 157, 0.1), rgba(255, 217, 61, 0.05));
+    padding: 30px;
+    border-radius: 25px;
+    text-align: center;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    transition: all 0.4s ease;
+    opacity: 0;
+    transform: scale(0.9);
+    position: relative;
+    overflow: hidden;
+}
+
+.breed-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 25px;
+    padding: 2px;
+    background: linear-gradient(45deg, #ff6b9d, #ffd93d);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.4s;
+}
+
+.breed-card:hover::before {
+    opacity: 1;
+}
+
+.breed-card.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.breed-card:hover {
+    transform: translateY(-15px) rotate(1deg);
+    box-shadow: 0 25px 60px rgba(255, 107, 157, 0.3);
+}
+
+.breed-img {
+    font-size: 5rem;
+    margin-bottom: 20px;
+    transition: transform 0.4s;
+}
+
+.breed-card:hover .breed-img {
+    transform: scale(1.2) rotate(-10deg);
+}
+
+.breed-card h3 {
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+    color: #ffd93d;
+}
+
+.breed-card p {
+    color: #b8b8d1;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.breed-tag {
+    display: inline-block;
+    padding: 8px 20px;
+    background: rgba(255, 107, 157, 0.2);
+    border-radius: 20px;
+    font-size: 0.9rem;
+    color: #ff6b9d;
+    border: 1px solid #ff6b9d;
+}
+
+/* Футер */
+footer {
+    text-align: center;
+    padding: 50px 20px;
+    background: rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid rgba(255, 107, 157, 0.2);
+}
+
+footer p {
+    color: #b8b8d1;
+    margin-bottom: 10px;
+}
+
+.footer-paws {
+    font-size: 1.5rem;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* Адаптив */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 15px 20px;
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .nav-links {
+        gap: 15px;
+    }
+    
+    .hero {
+        padding: 150px 20px 50px;
+        text-align: center;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .cat-emoji {
+        font-size: 10rem;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    section {
+        padding: 60px 20px;
+    }
+    
+    .nav-links a {
+        font-size: 0.9rem;
     }
 }
 
-// Клик по карточкам
-function setupClickEffects() {
-    document.addEventListener('click', (e) => {
-        createHeartBurst(e.clientX, e.clientY);
-    });
-    
-    // Мурчание при наведении на карточку
-    document.querySelectorAll('.fact-card, .breed-card').forEach(card => {
-        card.addEventListener('mouseenter', () => {
-            card.style.animation = 'none';
-            setTimeout(() => {
-                card.style.animation = 'wiggle 0.5s ease';
-            }, 10);
-        });
-    });
+/* Скролл-бар */
+::-webkit-scrollbar {
+    width: 10px;
 }
 
-// Параллакс для главного кота
-function setupParallax() {
-    const heroCat = document.querySelector('.cat-emoji');
-    if (!heroCat) return;
-    
-    document.addEventListener('mousemove', (e) => {
-        const x = (e.clientX / window.innerWidth - 0.5) * 30;
-        const y = (e.clientY / window.innerHeight - 0.5) * 30;
-        heroCat.style.transform = `translate(${x}px, ${y}px)`;
-    });
+::-webkit-scrollbar-track {
+    background: #1a1a2e;
 }
 
-// Смена цвета navbar при скролле
-function setupNavbarScroll() {
-    const navbar = document.querySelector('.navbar');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            navbar.style.background = 'rgba(15, 52, 96, 0.95)';
-            navbar.style.boxShadow = '0 5px 30px rgba(255, 107, 157, 0.3)';
-        } else {
-            navbar.style.background = 'rgba(26, 26, 46, 0.8)';
-            navbar.style.boxShadow = 'none';
-        }
-    });
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(45deg, #ff6b9d, #ffd93d);
+    border-radius: 5px;
 }
-
-// Случайное "мурчание" в консоли
-function catSound() {
-    const sounds = ['Мяу! 🐱', 'Муррр~ 💕', 'Мяу-мяу! 😺', 'Мррр... 😽'];
-    console.log(sounds[Math.floor(Math.random() * sounds.length)]);
-}
-
-// Инициализация
-document.addEventListener('DOMContentLoaded', () => {
-    createFloatingPaws();
-    setupScrollAnimations();
-    setupClickEffects();
-    setupParallax();
-    setupNavbarScroll();
-    
-    // Приветствие в консоли
-    console.log('%c🐱 Добро пожаловать в КотоМир! 🐱', 
-        'font-size: 20px; color: #ff6b9d; font-weight: bold;');
-    catSound();
-    
-    // Периодическое мурчание
-    setInterval(catSound, 10000);
-});
-
-// Плавная прокрутка для всех якорных ссылок
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({ behavior: 'smooth' });
-        }
-    });
-});
